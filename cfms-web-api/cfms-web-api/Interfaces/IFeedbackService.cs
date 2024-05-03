@@ -1,5 +1,4 @@
-﻿using System;
-using cfms_web_api.Models;
+﻿using cfms_web_api.Models;
 
 namespace cfms_web_api.Interfaces
 {
