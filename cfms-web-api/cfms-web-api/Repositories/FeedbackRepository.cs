@@ -1,57 +1,64 @@
-﻿using cfms_web_api.Interfaces;
+﻿using Castle.Core.Resource;
+using cfms_web_api.Data;
+using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
 
 namespace cfms_web_api.Controller
 {
-    public class FeedbackRepository : IFeedbackRepository // Implement an interface for future extensibility
+    public class FeedbackRepository : IFeedbackRepository
     {
-        private List<Feedback> feedbackList = new List<Feedback>()
-    {
-        new Feedback(1,1, "Suggestion", "Add a feature for searching past feedback.", DateTime.Now),
-        new Feedback(2,2, "Bug Report", "Encountered an error when submitting feedback.", DateTime.Now.AddDays(-1)),
-        new Feedback(3,3, "Question", "How can I export my feedback data?", DateTime.Now.AddDays(-2)),
-        new Feedback(4,4, "Positive Feedback", "The new interface is very user-friendly!", DateTime.Now.AddDays(-3)),
-        new Feedback(5,5, "Feature Request", "Implement a way to categorise feedback by topic.", DateTime.Now.AddDays(-4)),
-    };
+        private readonly AppDbContext _context;
+
+        public FeedbackRepository(AppDbContext context)
+        {
+            _context = context;
+        }
 
         public List<Feedback> GetAllFeedback()
         {
-            return feedbackList; // Return a copy to avoid modifying the internal list
+            return _context.Feedbacks.ToList();
         }
 
-        public Feedback GetFeedbackById(int id)
+        public Feedback GetFeedbackById(string id)
         {
-            return feedbackList.FirstOrDefault(f => f.Id == id);
+            return _context.Feedbacks.FirstOrDefault(c => c.Id.Equals(id)) ?? throw new ArgumentException("Customer not found.");
         }
 
         public List<Feedback> AddFeedback(Feedback feedback)
         {
-            // Implement logic to assign a unique ID (e.g., database auto-increment)
-            feedback.Id = feedbackList.Count + 1; // Temporary for in-memory list
-            feedbackList.Add(feedback);
-            return feedbackList;
+            try
+            {
+                _context.Feedbacks.Add(feedback);
+                _context.SaveChanges();
+                return _context.Feedbacks.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception appropriately (e.g., log it)
+                throw new Exception("Error occurred while adding feedback.", ex);
+            }
         }
 
-        public List<Feedback> UpdateFeedback(int id, Feedback feedback)
+        public List<Feedback> UpdateFeedback(string id, Feedback feedback)
         {
-            var existingFeedback = feedbackList.FirstOrDefault(f => f.Id == feedback.Id);
+            var existingFeedback = _context.Feedbacks.FirstOrDefault(f => f.Id.Equals(feedback.Id));
             if (existingFeedback != null)
             {
                 existingFeedback.CustomerId = feedback.CustomerId;
                 existingFeedback.Subject = feedback.Subject;
                 existingFeedback.Message = feedback.Message;
             }
-            return feedbackList;
+            return _context.Feedbacks.ToList();
         }
 
-        public List<Feedback> DeleteFeedback(int id)
+        public List<Feedback> DeleteFeedback(string id)
         {
-            var feedbackToDelete = feedbackList.FirstOrDefault(f => f.Id == id);
+            var feedbackToDelete = _context.Feedbacks.FirstOrDefault(f => f.Id.Equals(id));
             if (feedbackToDelete != null)
             {
-                feedbackList.Remove(feedbackToDelete);
+                _context.Feedbacks.Remove(feedbackToDelete);
             }
-            return feedbackList;
+            return _context.Feedbacks.ToList();
         }
     }
 

@@ -1,9 +1,11 @@
 ﻿using cfms_web_api.Controller;
+using cfms_web_api.Data;
 using cfms_web_api.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
