@@ -38,6 +38,12 @@ namespace cfms_web_api.Controller
             return _FeedbackService.AddFeedback(Feedback);
         }
 
+        [HttpPost("addFeedbackList")]
+        public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
+        {
+            return _FeedbackService.AddFeedback(feedbackList);
+        }
+
         [HttpPut("{id}")]
         public ActionResult<List<Feedback>> UpdateFeedback(string id, Feedback Feedback)
         {

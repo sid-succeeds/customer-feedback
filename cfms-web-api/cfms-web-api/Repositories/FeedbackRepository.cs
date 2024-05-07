@@ -39,6 +39,21 @@ namespace cfms_web_api.Controller
             }
         }
 
+        public List<Feedback> AddFeedback(List<Feedback> feedbackList)
+        {
+            try
+            {
+                _context.Feedbacks.AddRange(feedbackList);
+                _context.SaveChanges();
+                return _context.Feedbacks.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception appropriately (e.g., log it)
+                throw new Exception("Error occurred while adding feedback list.", ex);
+            }
+        }
+
         public List<Feedback> UpdateFeedback(string id, Feedback feedback)
         {
             var existingFeedback = _context.Feedbacks.FirstOrDefault(f => f.Id.Equals(feedback.Id));
