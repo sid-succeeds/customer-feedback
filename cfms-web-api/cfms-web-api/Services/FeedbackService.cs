@@ -28,6 +28,11 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.AddFeedback(feedback);
         }
 
+        public List<Feedback> AddFeedback(List<Feedback> feedbackList)
+        {
+            return _FeedbackRepository.AddFeedback(feedbackList);
+        }
+
         public List<Feedback> UpdateFeedback(string id, Feedback feedback)
         {
             return _FeedbackRepository.UpdateFeedback(id, feedback);
