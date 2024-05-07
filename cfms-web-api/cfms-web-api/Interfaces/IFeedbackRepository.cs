@@ -6,8 +6,8 @@ namespace cfms_web_api.Interfaces
 	{
         List<Feedback> GetAllFeedback();
         Feedback GetFeedbackById(int id);
-        List<Feedback> AddFeedback(Feedback Feedback);
-        List<Feedback> UpdateFeedback(Feedback Feedback);
+        List<Feedback> AddFeedback(Feedback feedback);
+        List<Feedback> UpdateFeedback(int id, Feedback feedback);
         List<Feedback> DeleteFeedback(int id);
     }
 }
