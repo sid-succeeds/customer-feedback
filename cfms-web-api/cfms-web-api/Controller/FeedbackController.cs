@@ -22,7 +22,7 @@ namespace cfms_web_api.Controller
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Feedback> GetFeedbackById(int id)
+        public ActionResult<Feedback> GetFeedbackById(string id)
         {
             var Feedback = _FeedbackService.GetFeedbackById(id);
             if (Feedback == null)
@@ -38,8 +38,14 @@ namespace cfms_web_api.Controller
             return _FeedbackService.AddFeedback(Feedback);
         }
 
+        [HttpPost("addFeedbackList")]
+        public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
+        {
+            return _FeedbackService.AddFeedback(feedbackList);
+        }
+
         [HttpPut("{id}")]
-        public ActionResult<List<Feedback>> UpdateFeedback(int id, Feedback Feedback)
+        public ActionResult<List<Feedback>> UpdateFeedback(string id, Feedback Feedback)
         {
             var updatedFeedbacks = _FeedbackService.UpdateFeedback(id, Feedback);
             if (updatedFeedbacks == null)
@@ -50,7 +56,7 @@ namespace cfms_web_api.Controller
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<List<Feedback>> DeleteFeedback(int id)
+        public ActionResult<List<Feedback>> DeleteFeedback(string id)
         {
             var deletedFeedbacks = _FeedbackService.DeleteFeedback(id);
             if (deletedFeedbacks == null)

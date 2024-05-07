@@ -5,10 +5,11 @@ namespace cfms_web_api.Interfaces
 	public interface IFeedbackRepository
 	{
         List<Feedback> GetAllFeedback();
-        Feedback GetFeedbackById(int id);
-        List<Feedback> AddFeedback(Feedback Feedback);
-        List<Feedback> UpdateFeedback(Feedback Feedback);
-        List<Feedback> DeleteFeedback(int id);
+        Feedback GetFeedbackById(string id);
+        List<Feedback> AddFeedback(Feedback feedback);
+        List<Feedback> AddFeedback(List<Feedback> feedback);
+        List<Feedback> UpdateFeedback(string id, Feedback feedback);
+        List<Feedback> DeleteFeedback(string id);
     }
 }
 
