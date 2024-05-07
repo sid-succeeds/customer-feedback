@@ -17,7 +17,12 @@ namespace cfms_web_api.Controller
             return _CustomerRepository.AddCustomer(customer);
         }
 
-        public List<Customer> DeleteCustomer(int id)
+        public List<Customer> AddCustomers(List<Customer> customers)
+        {
+            return _CustomerRepository.AddCustomers(customers);
+        }
+
+        public List<Customer> DeleteCustomer(string id)
         {
             return _CustomerRepository.DeleteCustomer(id);
         }
@@ -27,12 +32,12 @@ namespace cfms_web_api.Controller
             return _CustomerRepository.GetAllCustomers();
         }
 
-        public Customer GetCustomerById(int id)
+        public Customer GetCustomerById(string id)
         {
             return _CustomerRepository.GetCustomerById(id);
         }
 
-        public List<Customer> UpdateCustomer(int id, Customer Customer)
+        public List<Customer> UpdateCustomer(string id, Customer Customer)
         {
             return _CustomerRepository.UpdateCustomer(id, Customer);
         }

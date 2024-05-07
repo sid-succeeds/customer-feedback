@@ -18,7 +18,7 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.GetAllFeedback();
         }
 
-        public Feedback GetFeedbackById(int id)
+        public Feedback GetFeedbackById(string id)
         {
             return _FeedbackRepository.GetFeedbackById(id);
         }
@@ -28,12 +28,12 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.AddFeedback(feedback);
         }
 
-        public List<Feedback> UpdateFeedback(int id, Feedback feedback)
+        public List<Feedback> UpdateFeedback(string id, Feedback feedback)
         {
             return _FeedbackRepository.UpdateFeedback(id, feedback);
         }
 
-        public List<Feedback> DeleteFeedback(int id)
+        public List<Feedback> DeleteFeedback(string id)
         {
             return _FeedbackRepository.DeleteFeedback(id);
         }
