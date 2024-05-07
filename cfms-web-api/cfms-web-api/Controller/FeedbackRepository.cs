@@ -7,11 +7,11 @@ namespace cfms_web_api.Controller
     {
         private List<Feedback> feedbackList = new List<Feedback>()
     {
-        new Feedback(1, "John Doe", "john.doe@example.com", "Suggestion", "Add a feature for searching past feedback.", DateTime.Now),
-        new Feedback(2, "Jane Smith", "jane.smith@example.com", "Bug Report", "Encountered an error when submitting feedback.", DateTime.Now.AddDays(-1)),
-        new Feedback(3, "Michael Chen", "michael.chen@example.com", "Question", "How can I export my feedback data?", DateTime.Now.AddDays(-2)),
-        new Feedback(4, "Alice Garcia", "alice.garcia@example.com", "Positive Feedback", "The new interface is very user-friendly!", DateTime.Now.AddDays(-3)),
-        new Feedback(5, "David Lee", "david.lee@example.com", "Feature Request", "Implement a way to categorise feedback by topic.", DateTime.Now.AddDays(-4)),
+        new Feedback(1,1, "Suggestion", "Add a feature for searching past feedback.", DateTime.Now),
+        new Feedback(2,2, "Bug Report", "Encountered an error when submitting feedback.", DateTime.Now.AddDays(-1)),
+        new Feedback(3,3, "Question", "How can I export my feedback data?", DateTime.Now.AddDays(-2)),
+        new Feedback(4,4, "Positive Feedback", "The new interface is very user-friendly!", DateTime.Now.AddDays(-3)),
+        new Feedback(5,5, "Feature Request", "Implement a way to categorise feedback by topic.", DateTime.Now.AddDays(-4)),
     };
 
         public List<Feedback> GetAllFeedback()
@@ -32,16 +32,14 @@ namespace cfms_web_api.Controller
             return feedbackList;
         }
 
-        public List<Feedback> UpdateFeedback(Feedback feedback)
+        public List<Feedback> UpdateFeedback(int id, Feedback feedback)
         {
             var existingFeedback = feedbackList.FirstOrDefault(f => f.Id == feedback.Id);
             if (existingFeedback != null)
             {
-                existingFeedback.CustomerName = feedback.CustomerName;
-                existingFeedback.Email = feedback.Email;
+                existingFeedback.CustomerId = feedback.CustomerId;
                 existingFeedback.Subject = feedback.Subject;
                 existingFeedback.Message = feedback.Message;
-                // Update SubmittedDate if necessary (logic not shown here)
             }
             return feedbackList;
         }

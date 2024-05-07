@@ -23,14 +23,14 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.GetFeedbackById(id);
         }
 
-        public List<Feedback> AddFeedback(Feedback Feedback)
+        public List<Feedback> AddFeedback(Feedback feedback)
         {
-            return _FeedbackRepository.AddFeedback(Feedback);
+            return _FeedbackRepository.AddFeedback(feedback);
         }
 
-        public List<Feedback> UpdateFeedback(int id, Feedback Feedback)
+        public List<Feedback> UpdateFeedback(int id, Feedback feedback)
         {
-            return _FeedbackRepository.UpdateFeedback(Feedback);
+            return _FeedbackRepository.UpdateFeedback(id, feedback);
         }
 
         public List<Feedback> DeleteFeedback(int id)
