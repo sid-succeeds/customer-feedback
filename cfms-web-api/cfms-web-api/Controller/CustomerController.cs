@@ -15,7 +15,7 @@ namespace cfms_web_api.Controller
             _CustomerService = CustomerService;
         }
 
-        [HttpGet("getAllCustomers")]
+        [HttpGet]
         public ActionResult<List<Customer>> GetAllCustomers()
         {
             return _CustomerService.GetAllCustomers();
