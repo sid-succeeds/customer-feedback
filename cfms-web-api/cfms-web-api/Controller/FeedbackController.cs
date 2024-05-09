@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cfms_web_api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class FeedbackController : ControllerBase
     {
@@ -15,7 +15,8 @@ namespace cfms_web_api.Controller
             _FeedbackService = FeedbackService;
         }
 
-        [HttpGet]
+        //v1 functions start
+        [HttpGet("bulk")]
         public ActionResult<List<Feedback>> GetAllFeedbacks()
         {
             return _FeedbackService.GetAllFeedback();
@@ -38,7 +39,7 @@ namespace cfms_web_api.Controller
             return _FeedbackService.AddFeedback(Feedback);
         }
 
-        [HttpPost("addFeedbackList")]
+        [HttpPost("bulk")]
         public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
         {
             return _FeedbackService.AddFeedback(feedbackList);
@@ -65,6 +66,28 @@ namespace cfms_web_api.Controller
             }
             return deletedFeedbacks;
         }
+
+        //Get all feedback records for a particular customer
+        [HttpGet("customer/{customerId}")]
+        public ActionResult<List<Feedback>> GetFeedbacksByCustomerId(string customerId)
+        {
+            List<Feedback> feedbacks = _FeedbackService.GetFeedbacksByCustomerId(customerId);
+            if (feedbacks == null || feedbacks.Count == 0)
+            {
+                return NotFound();
+            }
+            return feedbacks;
+        }
+
+        //Create a new feedback record for a customer
+        [HttpPost("customer/{customerId}")]
+        public ActionResult<List<Feedback>> AddFeedbackForCustomer(string customerId, Feedback feedback)
+        {
+            feedback.CustomerId = customerId;
+            List<Feedback> addedFeedback = _FeedbackService.AddFeedback(customerId, feedback);
+            return addedFeedback;
+        }
+        //v1 functions end
     }
 }
 

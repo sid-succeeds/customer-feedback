@@ -1,5 +1,4 @@
-﻿using Castle.Core.Resource;
-using cfms_web_api.Data;
+﻿using cfms_web_api.Data;
 using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
 
@@ -53,7 +52,7 @@ namespace cfms_web_api.Controller
                 throw new Exception("Error occurred while adding feedback list.", ex);
             }
         }
-        
+
         public List<Feedback> UpdateFeedback(string id, Feedback feedback)
         {
             var existingFeedback = _context.Feedbacks.FirstOrDefault(f => f.Id.Equals(feedback.Id));
@@ -75,7 +74,26 @@ namespace cfms_web_api.Controller
             }
             return _context.Feedbacks.ToList();
         }
+
+        List<Feedback> IFeedbackRepository.AddFeedback(string customerId, Feedback feedback)
+        {
+            feedback.CustomerId = customerId;
+            try
+            {
+                _context.Feedbacks.Add(feedback);
+                _context.SaveChanges();
+                return _context.Feedbacks.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while adding feedback.", ex);
+            }
+        }
+
+        List<Feedback> IFeedbackRepository.GetFeedbacksByCustomerId(string customerId)
+        {
+            return _context.Feedbacks.Where(f => f.CustomerId.Equals(customerId)).ToList();
+        }
     }
 
 }
-
