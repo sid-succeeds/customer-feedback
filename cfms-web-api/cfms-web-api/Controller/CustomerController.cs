@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cfms_web_api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace cfms_web_api.Controller
             _CustomerService = CustomerService;
         }
 
-        [HttpGet]
+        [HttpGet("bulk")]
         public ActionResult<List<Customer>> GetAllCustomers()
         {
             return _CustomerService.GetAllCustomers();
@@ -38,7 +38,7 @@ namespace cfms_web_api.Controller
             return _CustomerService.AddCustomer(Customer);
         }
 
-        [HttpPost("addCustomers")]
+        [HttpPost("bulk")]
         public ActionResult<List<Customer>> AddCustomers(List<Customer> customers)
         {
             return _CustomerService.AddCustomers(customers);

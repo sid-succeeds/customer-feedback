@@ -74,6 +74,26 @@ namespace cfms_web_api.Controller
             }
             return _context.Feedbacks.ToList();
         }
+
+        List<Feedback> IFeedbackRepository.AddFeedback(string customerId, Feedback feedback)
+        {
+            feedback.CustomerId = customerId;
+            try
+            {
+                _context.Feedbacks.Add(feedback);
+                _context.SaveChanges();
+                return _context.Feedbacks.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occurred while adding feedback.", ex);
+            }
+        }
+
+        List<Feedback> IFeedbackRepository.GetFeedbacksByCustomerId(string customerId)
+        {
+            return _context.Feedbacks.Where(f => f.CustomerId.Equals(customerId)).ToList();
+        }
     }
 
 }
