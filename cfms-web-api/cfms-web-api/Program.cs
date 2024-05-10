@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSwaggerGen(options =>
 {
     options.DocumentFilter<SwaggerDocumentFilter>();
+    options.OperationFilter<SwaggerOperationFilter>();
+
     var docFile = $"{typeof(Program).Assembly.GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, docFile));
 });
@@ -52,12 +54,9 @@ if (app.Environment.IsDevelopment())
     {
         options.DefaultModelExpandDepth(2);
         options.DefaultModelRendering(ModelRendering.Model);
-        options.DefaultModelsExpandDepth(-1);
         options.DisplayOperationId();
         options.DisplayRequestDuration();
         options.DocExpansion(DocExpansion.None);
-        options.EnableDeepLinking();
-        options.EnableFilter();
         options.ShowExtensions();
 
         // Specify Swagger endpoints for each API version
