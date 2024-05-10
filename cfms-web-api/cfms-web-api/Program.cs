@@ -63,7 +63,8 @@ if (app.Environment.IsDevelopment())
         // Specify Swagger endpoints for each API version
         foreach (var desc in versionDescProvider.ApiVersionDescriptions)
         {
-            options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", $"Customer Feedback API v{desc.GroupName.ToUpper()}");
+            options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json",
+                $"Customer Feedback API v{desc.GroupName.ToUpper()}{(desc.IsDeprecated ? " (deprecated)" : "")}");
         }
     });
 }

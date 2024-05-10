@@ -6,8 +6,9 @@ namespace cfms_web_api.Controller.v1
 {
     [Route("[controller]")]
     [Route("v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
+    [Obsolete]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _CustomerService;
