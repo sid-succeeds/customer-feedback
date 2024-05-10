@@ -27,6 +27,11 @@ namespace cfms_web_api.Controller
             return _CustomerRepository.DeleteCustomer(id);
         }
 
+        public void DeleteAllCustomers()
+        {
+            _CustomerRepository.DeleteAllCustomers();
+        }
+
         public List<Customer> GetAllCustomers()
         {
             return _CustomerRepository.GetAllCustomers();

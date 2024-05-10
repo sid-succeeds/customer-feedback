@@ -94,6 +94,12 @@ namespace cfms_web_api.Controller
         {
             return _context.Feedbacks.Where(f => f.CustomerId.Equals(customerId)).ToList();
         }
+
+        public void DeleteAllFeedback()
+        {
+            _context.Feedbacks.RemoveRange(_context.Feedbacks);
+            _context.SaveChanges();
+        }
     }
 
 }

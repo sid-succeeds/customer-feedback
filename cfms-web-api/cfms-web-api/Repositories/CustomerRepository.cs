@@ -85,6 +85,12 @@ namespace cfms_web_api.Data
             return _context.Customers.ToList();
         }
 
+        public void DeleteAllCustomers()
+        {
+            _context.Customers.RemoveRange(_context.Customers);
+            _context.SaveChanges();
+        }
+
         public List<Customer> SearchCustomers(string searchTerm)
         {
             return _context.Customers

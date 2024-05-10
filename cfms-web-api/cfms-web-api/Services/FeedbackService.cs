@@ -50,6 +50,11 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.DeleteFeedback(id);
         }
 
+        public void DeleteAllFeedback()
+        {
+            _FeedbackRepository.DeleteAllFeedback();
+        }
+
         public List<Feedback> GetFeedbacksByCustomerId(string customerId)
         {
             return _FeedbackRepository.GetFeedbacksByCustomerId(customerId);
