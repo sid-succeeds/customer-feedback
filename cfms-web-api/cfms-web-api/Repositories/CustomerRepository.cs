@@ -84,5 +84,20 @@ namespace cfms_web_api.Data
             }
             return _context.Customers.ToList();
         }
+
+        public List<Customer> SearchCustomers(string searchTerm)
+        {
+            return _context.Customers
+                .Where(c => c.FirstName.Contains(searchTerm) || c.LastName.Contains(searchTerm) || c.Email.Contains(searchTerm))
+                .ToList();
+        }
+
+        public List<Customer> GetCustomersPage(int skipCount, int pageSize)
+        {
+            return _context.Customers
+                .Skip(skipCount)
+                .Take(pageSize)
+                .ToList();
+        }
     }
 }
