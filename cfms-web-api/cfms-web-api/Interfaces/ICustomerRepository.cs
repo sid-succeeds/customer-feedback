@@ -10,6 +10,9 @@ namespace cfms_web_api.Interfaces
         List<Customer> AddCustomers(List<Customer> customers);
         List<Customer> UpdateCustomer(string id, Customer customer);
         List<Customer> DeleteCustomer(string id);
+
+        List<Customer> SearchCustomers(string searchTerm);
+        List<Customer> GetCustomersPage(int pageNumber, int pageSize);
     }
 }
 
