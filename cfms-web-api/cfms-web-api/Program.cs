@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
-//Swagger/OpenAPI
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.DocumentFilter<SwaggerDocumentFilter>();
+    var docFile = $"{typeof(Program).Assembly.GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, docFile));
 });
 
 // Add services to the container.
@@ -47,6 +50,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
+        options.DefaultModelExpandDepth(2);
+        options.DefaultModelRendering(ModelRendering.Model);
+        options.DefaultModelsExpandDepth(-1);
+        options.DisplayOperationId();
+        options.DisplayRequestDuration();
+        options.DocExpansion(DocExpansion.None);
+        options.EnableDeepLinking();
+        options.EnableFilter();
+        options.ShowExtensions();
+
+        // Specify Swagger endpoints for each API version
         foreach (var desc in versionDescProvider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", $"Customer Feedback API v{desc.GroupName.ToUpper()}");
