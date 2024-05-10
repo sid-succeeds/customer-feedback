@@ -1,5 +1,4 @@
-﻿using Castle.Core.Resource;
-using cfms_web_api.Models;
+﻿using cfms_web_api.Models;
 
 namespace cfms_web_api.Interfaces
 {
@@ -15,7 +14,6 @@ namespace cfms_web_api.Interfaces
         List<Feedback> UpdateFeedback(string id, Feedback feedback);
         List<Feedback> DeleteFeedback(string id);
         List<Feedback> GetFeedbacksByCustomerId(string customerId);
-        
     }
 }
 

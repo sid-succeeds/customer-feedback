@@ -41,6 +41,17 @@ namespace cfms_web_api.Controller
         {
             return _CustomerRepository.UpdateCustomer(id, Customer);
         }
+
+        public List<Customer> SearchCustomers(string searchTerm)
+        {
+            return _CustomerRepository.SearchCustomers(searchTerm);
+        }
+
+        public List<Customer> GetCustomersPage(int pageNumber, int pageSize)
+        {
+            int skipCount = (pageNumber - 1) * pageSize;
+            return _CustomerRepository.GetCustomersPage(skipCount, pageSize);
+        }
     }
 }
 
