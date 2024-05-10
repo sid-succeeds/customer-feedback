@@ -16,26 +16,33 @@
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="Controller\" />
     <None Remove="Interfaces\" />
     <None Remove="Tests\" />
     <None Remove="Tests\ControllerTests\" />
     <None Remove="Services\" />
     <None Remove="Repositories\" />
     <None Remove="Data\" />
+    <None Remove="Controllers\" />
+    <None Remove="SwaggerConfig\" />
+    <None Remove="Controllers\v1\" />
+    <None Remove="Controllers\v2\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Controller\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Tests\" />
     <Folder Include="Tests\ControllerTests\" />
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />
     <Folder Include="Data\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="SwaggerConfig\" />
+    <Folder Include="Controllers\v1\" />
+    <Folder Include="Controllers\v2\" />
   </ItemGroup>
 </Project>

@@ -2,9 +2,10 @@
 using cfms_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cfms_web_api.Controller
+namespace cfms_web_api.Controller.v2
 {
-    [Route("api/v1/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class FeedbackController : ControllerBase
     {
@@ -15,8 +16,7 @@ namespace cfms_web_api.Controller
             _FeedbackService = FeedbackService;
         }
 
-        //v1 functions start
-        [HttpGet("bulk")]
+        [HttpGet]
         public ActionResult<List<Feedback>> GetAllFeedbacks()
         {
             return _FeedbackService.GetAllFeedback();
@@ -34,12 +34,12 @@ namespace cfms_web_api.Controller
         }
 
         [HttpPost]
-        public ActionResult<List<Feedback>> AddFeedback(Feedback Feedback)
+        public ActionResult<List<Feedback>> AddFeedback(Feedback feedback)
         {
-            return _FeedbackService.AddFeedback(Feedback);
+            return _FeedbackService.AddFeedback(feedback);
         }
 
-        [HttpPost("bulk")]
+        [HttpPost("Bulk")]
         public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
         {
             return _FeedbackService.AddFeedback(feedbackList);
@@ -67,8 +67,9 @@ namespace cfms_web_api.Controller
             return deletedFeedbacks;
         }
 
+        //New Functions on API v2
         //Get all feedback records for a particular customer
-        [HttpGet("customer/{customerId}")]
+        [HttpGet("Customer/{customerId}")]
         public ActionResult<List<Feedback>> GetFeedbacksByCustomerId(string customerId)
         {
             List<Feedback> feedbacks = _FeedbackService.GetFeedbacksByCustomerId(customerId);
@@ -80,14 +81,14 @@ namespace cfms_web_api.Controller
         }
 
         //Create a new feedback record for a customer
-        [HttpPost("customer/{customerId}")]
+        [HttpPost("Customer/{customerId}")]
         public ActionResult<List<Feedback>> AddFeedbackForCustomer(string customerId, Feedback feedback)
         {
             feedback.CustomerId = customerId;
             List<Feedback> addedFeedback = _FeedbackService.AddFeedback(customerId, feedback);
             return addedFeedback;
         }
-        //v1 functions end
+
     }
 }
 

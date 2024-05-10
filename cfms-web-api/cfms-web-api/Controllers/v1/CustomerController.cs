@@ -2,20 +2,22 @@
 using cfms_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cfms_web_api.Controller
+namespace cfms_web_api.Controller.v1
 {
-    [Route("api/v1/[controller]")]
+    [Route("[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _CustomerService;
 
-        public CustomerController(ICustomerService CustomerService)
+        public CustomersController(ICustomerService CustomerService)
         {
             _CustomerService = CustomerService;
         }
 
-        [HttpGet("bulk")]
+        [HttpGet]
         public ActionResult<List<Customer>> GetAllCustomers()
         {
             return _CustomerService.GetAllCustomers();
@@ -38,7 +40,7 @@ namespace cfms_web_api.Controller
             return _CustomerService.AddCustomer(Customer);
         }
 
-        [HttpPost("bulk")]
+        [HttpPost("Bulk")]
         public ActionResult<List<Customer>> AddCustomers(List<Customer> customers)
         {
             return _CustomerService.AddCustomers(customers);
