@@ -1,7 +1,6 @@
 ﻿using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace cfms_web_api.Controller.v2
 {
@@ -166,6 +165,30 @@ namespace cfms_web_api.Controller.v2
             }
             return deletedFeedbacks;
         }
+
+        /// <summary>
+        /// Deletes all feedback entries.
+        /// </summary>
+        /// <returns>The HTTP status code.</returns>
+        /// <response code="200">If all feedback entries were deleted successfully.</response>
+        /// <response code="500">If an exception was thrown.</response>
+        [HttpDelete("All")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public IActionResult DeleteAllFeedback()
+        {
+            try
+            {
+                _FeedbackService.DeleteAllFeedback();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                //TODO: Logging
+                return StatusCode(500);
+            }
+        }
+
         #endregion
     }
 }

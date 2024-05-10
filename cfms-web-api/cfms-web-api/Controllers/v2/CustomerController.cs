@@ -151,6 +151,20 @@ namespace cfms_web_api.Controller.v2
             }
             return deletedCustomers;
         }
+
+        /// <summary>
+        /// Deletes all customer records.
+        /// </summary>
+        /// <returns>The HTTP status code.</returns>
+        /// <response code="200">If all customer deletions were successful.</response>
+        /// <response code="404">If nothing was found.</response>
+        [HttpDelete("All")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public void DeleteAllCustomers()
+        {
+            _CustomerService.DeleteAllCustomers();
+        }
         #endregion
     }
 }
