@@ -36,6 +36,7 @@
     <None Remove="SwaggerConfig\" />
     <None Remove="Controllers\v1\" />
     <None Remove="Controllers\v2\" />
+    <None Remove="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -49,5 +50,6 @@
     <Folder Include="SwaggerConfig\" />
     <Folder Include="Controllers\v1\" />
     <Folder Include="Controllers\v2\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>
