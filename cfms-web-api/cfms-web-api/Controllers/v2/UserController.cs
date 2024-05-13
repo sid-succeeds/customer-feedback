@@ -53,12 +53,12 @@ namespace cfms_web_api.Controllers.v2
         [ProducesResponseType(404)]
         public ActionResult<List<User>> DeleteUser(string id)
         {
-            var deletedUser = _UserService.DeleteUserById(id);
-            if (deletedUser == null)
+            var listwithoutdeletedUser = _UserService.DeleteUserById(id);
+            if (listwithoutdeletedUser == null)
             {
                 return NotFound();
             }
-            return _UserService.GetAllUsers();
+            return listwithoutdeletedUser;
         }
     }
 }
