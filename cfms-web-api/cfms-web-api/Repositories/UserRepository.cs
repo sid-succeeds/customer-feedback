@@ -1,6 +1,7 @@
 ﻿using cfms_web_api.Data;
 using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
+using cfms_web_api.Services;
 
 namespace cfms_web_api.Repositories
 {
@@ -17,6 +18,9 @@ namespace cfms_web_api.Repositories
         {
             try
             {
+                // Hash the password before saving it to the database
+                user.Password = PasswordHasher.HashPassword(user.Password);
+
                 _context.Users.Add(user);
                 _context.SaveChanges();
                 return _context.Users.ToList();
@@ -24,7 +28,7 @@ namespace cfms_web_api.Repositories
             catch (Exception ex)
             {
                 // Handle exception appropriately (e.g., log it)
-                //throw new Exception("Error occurred while adding feedback.", ex);
+                // throw new Exception("Error occurred while adding user.", ex);
                 return null;
             }
         }
