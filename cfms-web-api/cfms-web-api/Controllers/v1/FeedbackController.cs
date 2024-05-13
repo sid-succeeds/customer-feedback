@@ -40,34 +40,6 @@ namespace cfms_web_api.Controller.v1
         {
             return _FeedbackService.AddFeedback(feedback);
         }
-
-        [HttpPost("Bulk")]
-        public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
-        {
-            return _FeedbackService.AddFeedback(feedbackList);
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<List<Feedback>> UpdateFeedback(string id, Feedback Feedback)
-        {
-            var updatedFeedbacks = _FeedbackService.UpdateFeedback(id, Feedback);
-            if (updatedFeedbacks == null)
-            {
-                return NotFound();
-            }
-            return updatedFeedbacks;
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult<List<Feedback>> DeleteFeedback(string id)
-        {
-            var deletedFeedbacks = _FeedbackService.DeleteFeedback(id);
-            if (deletedFeedbacks == null)
-            {
-                return NotFound();
-            }
-            return deletedFeedbacks;
-        }
     }
 }
 

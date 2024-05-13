@@ -2,6 +2,7 @@
 using cfms_web_api.Controllers.v2;
 using cfms_web_api.Data;
 using cfms_web_api.Interfaces;
+using cfms_web_api.Repositories;
 using cfms_web_api.Services;
 using cfms_web_api.SwaggerConfig;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IMailService, MailgunService>();
 builder.Services.AddScoped<NotificationController>();
