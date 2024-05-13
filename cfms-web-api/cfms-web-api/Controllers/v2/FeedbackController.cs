@@ -1,4 +1,5 @@
-﻿using cfms_web_api.Interfaces;
+﻿using cfms_web_api.Controllers.v2;
+using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace cfms_web_api.Controller.v2
     public class FeedbackController : ControllerBase
     {
         private readonly IFeedbackService _FeedbackService;
+        private readonly NotificationController _NotificationController;
 
-        public FeedbackController(IFeedbackService FeedbackService)
+        public FeedbackController(IFeedbackService FeedbackService, NotificationController NotificationController)
         {
             _FeedbackService = FeedbackService;
+            _NotificationController = NotificationController;
         }
 
         #region GET Methods
@@ -81,7 +84,16 @@ namespace cfms_web_api.Controller.v2
         [ProducesResponseType(201, Type = typeof(List<Feedback>))]
         public ActionResult<List<Feedback>> AddFeedback(Feedback feedback)
         {
-            return _FeedbackService.AddFeedback(feedback);
+            var addedFeedback = _FeedbackService.AddFeedback(feedback);
+
+            if (addedFeedback != null)
+            {
+                // If the feedback was added successfully, send notification alert
+                string message = $"Feedback ID: {feedback.Id}\nSubject: {feedback.Subject}\nMessage: {feedback.Message}\nSubmitted Date: {feedback.SubmittedDate}";
+                _NotificationController.SendNotif("emandlenionline@gmail.com", "Feedback Received", message);
+            }
+
+            return addedFeedback;
         }
 
         /// <summary>
@@ -90,12 +102,12 @@ namespace cfms_web_api.Controller.v2
         /// <param name="feedbackList">The list of feedbacks to add.</param>
         /// <returns>The HTTP status code and the added feedbacks.</returns>
         /// <response code="201">Returns the added feedbacks.</response>
-        [HttpPost("Bulk")]
-        [ProducesResponseType(201, Type = typeof(List<Feedback>))]
-        public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
-        {
-            return _FeedbackService.AddFeedback(feedbackList);
-        }
+        //[HttpPost("Bulk")]
+        //[ProducesResponseType(201, Type = typeof(List<Feedback>))]
+        //public ActionResult<List<Feedback>> AddFeedback(List<Feedback> feedbackList)
+        //{
+        //    return _FeedbackService.AddFeedback(feedbackList);
+        //}
 
         /// <summary>
         /// Adds feedback for a specific customer.

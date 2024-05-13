@@ -1,6 +1,8 @@
 ﻿using cfms_web_api.Controller;
+using cfms_web_api.Controllers.v2;
 using cfms_web_api.Data;
 using cfms_web_api.Interfaces;
+using cfms_web_api.Services;
 using cfms_web_api.SwaggerConfig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -25,6 +27,8 @@ builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IMailService, MailgunService>();
+builder.Services.AddScoped<NotificationController>();
 
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigOptions>();
 builder.Services.AddApiVersioning(options =>
@@ -38,7 +42,6 @@ builder.Services.AddVersionedApiExplorer(options =>
 {
     options.SubstituteApiVersionInUrl = true;
 });
-
 
 builder.Services.AddControllers();
 
@@ -77,4 +80,3 @@ app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(
 app.MapControllers();
 
 app.Run();
-
