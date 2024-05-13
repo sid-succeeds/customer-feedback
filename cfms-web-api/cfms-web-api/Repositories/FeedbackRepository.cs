@@ -72,6 +72,10 @@ namespace cfms_web_api.Controller
             {
                 _context.Feedbacks.Remove(feedbackToDelete);
             }
+            else
+            {
+                return null;
+            }
             return _context.Feedbacks.ToList();
         }
 

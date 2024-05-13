@@ -127,6 +127,7 @@ namespace cfms_web_api.Controller.v2
         #endregion
 
         #region PUT Methods
+        /*
         /// <summary>
         /// Updates feedback.
         /// </summary>
@@ -153,6 +154,7 @@ namespace cfms_web_api.Controller.v2
             }
             return updatedFeedbacks;
         }
+        */
         #endregion
 
         #region DELETE Methods
