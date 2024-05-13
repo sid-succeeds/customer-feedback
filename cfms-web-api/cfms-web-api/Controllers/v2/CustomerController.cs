@@ -90,7 +90,7 @@ namespace cfms_web_api.Controller.v2
         [ProducesResponseType(201, Type = typeof(List<Customer>))]
         public ActionResult<List<Customer>> AddCustomer(Customer Customer)
         {
-            return _CustomerService.AddCustomer(Customer);
+            return _CustomerService.AddCustomer(Customer);         
         }
 
         /// <summary>

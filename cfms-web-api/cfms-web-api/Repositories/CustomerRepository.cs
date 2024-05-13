@@ -80,7 +80,7 @@ namespace cfms_web_api.Data
             }
             else
             {
-                throw new ArgumentException("Customer not found.");
+                return null;
             }
             return _context.Customers.ToList();
         }
