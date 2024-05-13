@@ -8,13 +8,13 @@
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
 
-        public User(string id, string firstName, string lastName, string email, bool isAdmin)
+        public User(string id, string firstName, string lastName, string email)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            IsAdmin = isAdmin;
+            IsAdmin = true;
         }
     }
 }
