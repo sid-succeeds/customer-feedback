@@ -1,12 +1,11 @@
-﻿using System.Configuration;
-using cfms_web_api.Models;
+﻿using cfms_web_api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace cfms_web_api.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,8 +19,8 @@ namespace cfms_web_api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Configuring Customer table
-            modelBuilder.Entity<Customer>().ToContainer("Customer").HasPartitionKey(e => e.Id);
+            //Configuring User table
+            modelBuilder.Entity<User>().ToContainer("User").HasPartitionKey(u => u.Id);
 
             //Configuring Feedback table
             modelBuilder.Entity<Feedback>().ToContainer("Feedback").HasPartitionKey(f => f.Id);

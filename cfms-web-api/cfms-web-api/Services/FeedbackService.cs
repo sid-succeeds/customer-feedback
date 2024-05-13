@@ -1,7 +1,5 @@
-﻿using System;
-using cfms_web_api.Interfaces;
+﻿using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace cfms_web_api.Controller
 {
@@ -29,35 +27,9 @@ namespace cfms_web_api.Controller
             return _FeedbackRepository.AddFeedback(feedback);
         }
 
-        public List<Feedback> AddFeedback(List<Feedback> feedbackList)
-        {
-            return _FeedbackRepository.AddFeedback(feedbackList);
-        }
-
-        public List<Feedback> AddFeedback(string customerId, Feedback feedback)
-        {
-            feedback.CustomerId = customerId;
-            return _FeedbackRepository.AddFeedback(customerId, feedback);
-        }
-
-        public List<Feedback> UpdateFeedback(string id, Feedback feedback)
-        {
-            return _FeedbackRepository.UpdateFeedback(id, feedback);
-        }
-
-        public List<Feedback> DeleteFeedback(string id)
-        {
-            return _FeedbackRepository.DeleteFeedback(id);
-        }
-
         public void DeleteAllFeedback()
         {
             _FeedbackRepository.DeleteAllFeedback();
-        }
-
-        public List<Feedback> GetFeedbacksByCustomerId(string customerId)
-        {
-            return _FeedbackRepository.GetFeedbacksByCustomerId(customerId);
         }
     }
 }
