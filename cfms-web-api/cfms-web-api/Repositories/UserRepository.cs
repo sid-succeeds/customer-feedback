@@ -58,6 +58,24 @@ namespace cfms_web_api.Repositories
         {
             return _context.Users.ToList();
         }
+
+        public User GetUser(string email, string password)
+        {
+            string hashedPassword = PasswordHasher.HashPassword(password);
+            Console.WriteLine("Hashed: "+hashedPassword);
+            var user = _context.Users.FirstOrDefault(c => c.Email.Equals(email) && c.Password.Equals(hashedPassword));
+
+            if (user != null)
+            {
+                Console.WriteLine("User found: " + user.Email);
+                return user;
+            }
+            else
+            {
+                Console.WriteLine("User not found for email: " + email);
+                return null;
+            }
+        }
     }
 }
 

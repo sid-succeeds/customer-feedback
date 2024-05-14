@@ -1,45 +1,82 @@
-﻿using System.Security.Cryptography;
+﻿using System.Text;
+
 namespace cfms_web_api.Services
 {
     public class PasswordHasher
     {
-        private const int SaltSize = 16;
-        private const int HashSize = 20;
-        private const int Iterations = 10000;
+        private const int key = 6;
+        private const int columns = 8;
 
-        public static string HashPassword(string password)
+        public static string HashPassword(string plaintext)
         {
-            using var rng = new RNGCryptoServiceProvider();
-            byte[] salt;
-            rng.GetBytes(salt = new byte[SaltSize]);
+            // Apply Caesar cipher encryption
+            string caesarEncrypted = CaesarCipher(plaintext, key);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations);
-            byte[] hash = pbkdf2.GetBytes(HashSize);
+            // Calculate number of rows needed for transposition
+            int rows = (int)Math.Ceiling((double)caesarEncrypted.Length / columns);
 
-            byte[] hashBytes = new byte[SaltSize + HashSize];
-            Array.Copy(salt, 0, hashBytes, 0, SaltSize);
-            Array.Copy(hash, 0, hashBytes, SaltSize, HashSize);
+            // Create a matrix to store characters for transposition
+            char[,] matrix = new char[rows, columns];
 
-            return Convert.ToBase64String(hashBytes);
-        }
-
-        public static bool VerifyPassword(string password, string hashedPassword)
-        {
-            byte[] hashBytes = Convert.FromBase64String(hashedPassword);
-            byte[] salt = new byte[SaltSize];
-            Array.Copy(hashBytes, 0, salt, 0, SaltSize);
-
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations);
-            byte[] hash = pbkdf2.GetBytes(HashSize);
-
-            for (int i = 0; i < HashSize; i++)
+            // Fill matrix with characters from the Caesar encrypted text
+            int index = 0;
+            for (int i = 0; i < rows; i++)
             {
-                if (hashBytes[i + SaltSize] != hash[i])
+                for (int j = 0; j < columns; j++)
                 {
-                    return false;
+                    if (index < caesarEncrypted.Length)
+                    {
+                        matrix[i, j] = caesarEncrypted[index];
+                        index++;
+                    }
+                    else
+                    {
+                        matrix[i, j] = ' '; // Padding with space if necessary
+                    }
                 }
             }
-            return true;
+
+            // Read characters from the matrix column-wise to get the transposed text
+            StringBuilder transposedText = new StringBuilder();
+            for (int j = 0; j < columns; j++)
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    transposedText.Append(matrix[i, j]);
+                }
+            }
+
+            return transposedText.ToString();
+        }
+
+        static string CaesarCipher(string input, int key)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (char c in input)
+            {
+                if (char.IsLetter(c))
+                {
+                    char shifted = (char)(c + key);
+
+                    if ((char.IsLower(c) && shifted > 'z') || (char.IsUpper(c) && shifted > 'Z'))
+                    {
+                        shifted = (char)(c + key - 26);
+                    }
+                    else if ((char.IsLower(c) && shifted < 'a') || (char.IsUpper(c) && shifted < 'A'))
+                    {
+                        shifted = (char)(c + key + 26);
+                    }
+
+                    result.Append(shifted);
+                }
+                else
+                {
+                    result.Append(c);
+                }
+            }
+
+            return result.ToString();
         }
     }
 }
