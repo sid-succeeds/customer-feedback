@@ -16,6 +16,9 @@ Cloud-Native Architecture: Leveraging Microsoft Azure services ensures a cloud-n
 
 Performance: Azure Cosmos NoSQL Database provides low-latency data access and high throughput, ensuring optimal performance for customer feedback data storage and retrieval operations.
 
+## Usage
+The Customer Feedback Management System Web API exposes a set of endpoints for interacting with customer feedback data. Detailed documentation on how to use the API endpoints can be found in the Swagger documentation provided.
+
 ## Steps to Run the Application
 
 1. Clone the repository:
