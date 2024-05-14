@@ -39,6 +39,7 @@
     <None Remove="Controllers\v2\" />
     <None Remove="Utils\" />
     <None Remove="Tests\ControllerTests\v2\" />
+    <None Remove="Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -54,5 +55,6 @@
     <Folder Include="Controllers\v2\" />
     <Folder Include="Utils\" />
     <Folder Include="Tests\ControllerTests\v2\" />
+    <Folder Include="Attributes\" />
   </ItemGroup>
 </Project>

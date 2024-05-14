@@ -15,13 +15,15 @@ namespace cfms_web_api_tests.Controllers.v2
         private FeedbackController _feedbackController;
         private Mock<IFeedbackService> _feedbackServiceMock;
         private Mock<NotificationController> _notificationControllerMock;
+        private Mock<IConfiguration> _configControllerMock;
 
         [SetUp]
         public void Setup()
         {
             _feedbackServiceMock = new Mock<IFeedbackService>();
             _notificationControllerMock = new Mock<NotificationController>();
-            _feedbackController = new FeedbackController(_feedbackServiceMock.Object, _notificationControllerMock.Object);
+            _configControllerMock = new Mock<IConfiguration>();
+            _feedbackController = new FeedbackController(_feedbackServiceMock.Object, _notificationControllerMock.Object, _configControllerMock.Object);
         }
 
         [Test]
@@ -48,7 +50,7 @@ namespace cfms_web_api_tests.Controllers.v2
         {
             // Arrange
             var feedbackId = "1";
-            var feedback = new Feedback (feedbackId, "Subject","Message",DateTime.Now);
+            var feedback = new Feedback(feedbackId, "Subject", "Message", DateTime.Now);
             _feedbackServiceMock.Setup(service => service.GetFeedbackById(feedbackId)).Returns(feedback);
 
             // Act
@@ -63,11 +65,12 @@ namespace cfms_web_api_tests.Controllers.v2
         public void AddFeedback_Adds_New_Feedback()
         {
             // Arrange
-            var newFeedback = new Feedback ("3", "New Subject", "New Message", DateTime.Now);
+            var apiKey = "valid-api-key";
+            var newFeedback = new Feedback("3", "New Subject", "New Message", DateTime.Now);
             _feedbackServiceMock.Setup(service => service.AddFeedback(newFeedback)).Returns(new List<Feedback> { newFeedback });
 
             // Act
-            var result = _feedbackController.AddFeedback(newFeedback);
+            var result = _feedbackController.AddFeedback(apiKey, newFeedback);
 
             // Assert
             result.Should().BeOfType<ActionResult<List<Feedback>>>()
