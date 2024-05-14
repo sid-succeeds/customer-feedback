@@ -31,6 +31,11 @@ namespace cfms_web_api.Services
         {
             return _UserRepository.GetAllUsers();
         }
+
+        public User GetUser(string email, string password)
+        {
+            return _UserRepository.GetUser(email, password);
+        }
     }
 }
 

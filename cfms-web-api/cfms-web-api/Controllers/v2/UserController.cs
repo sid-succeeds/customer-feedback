@@ -21,11 +21,23 @@ namespace cfms_web_api.Controllers.v2
         /// </summary>
         /// <returns>The HTTP status code and a list of all users.</returns>
         /// <response code="200">Returns a list of all users.</response>
-        [HttpGet]
+        [HttpGet("all")]
         [ProducesResponseType(200, Type = typeof(List<User>))]
         public ActionResult<List<User>> GetAllUsers()
         {
             return _UserService.GetAllUsers();
+        }
+
+        /// <summary>
+        /// Retrieves a user by unique email and password combination.
+        /// </summary>
+        /// <returns>The HTTP status code the matching user record.</returns>
+        /// <response code="200">Returns a users.</response>
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(User))]
+        public ActionResult<User> GetUser(string email, string password)
+        {
+            return _UserService.GetUser(email, password);
         }
 
         /// <summary>
