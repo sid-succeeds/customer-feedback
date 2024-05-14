@@ -15,8 +15,6 @@ namespace cfms_web_api.Controllers.v2
         public void SendNotif(string to, string subject, string message)
         {
             RestResponse response = _mailService.SendMessage(to, subject, message);
-            // log response
         }
     }
 }
-
