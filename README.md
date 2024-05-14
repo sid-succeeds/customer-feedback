@@ -53,4 +53,6 @@ The Customer Feedback Management System Web API exposes a set of endpoints for i
 
 ## Additional Notes
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+- **Sensitive Information**: Please note that the `appsettings.json` file containing sensitive information such as database connection strings has been intentionally left in the repository to run and test the application smoothly. They point to sandbox environments. You do not need to create your own `appsettings.json` file and configure it with the necessary settings to run the application.
+
+
