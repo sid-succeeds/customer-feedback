@@ -1,4 +1,5 @@
-﻿using cfms_web_api.Controllers.v2;
+﻿using cfms_web_api.Attributes;
+using cfms_web_api.Controllers.v2;
 using cfms_web_api.Interfaces;
 using cfms_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,16 @@ namespace cfms_web_api.Controller.v2
     {
         private readonly IFeedbackService _FeedbackService;
         private readonly NotificationController _NotificationController;
+        private readonly IConfiguration _configuration;
 
-        public FeedbackController(IFeedbackService FeedbackService, NotificationController NotificationController)
+        public FeedbackController(IFeedbackService FeedbackService, NotificationController NotificationController, IConfiguration configuration)
         {
             _FeedbackService = FeedbackService;
             _NotificationController = NotificationController;
+            _configuration = configuration;
+
+            // Set the configuration for ApiKeyAttribute
+            ApiKeyAttribute.Configuration = configuration;
         }
 
         #region GET Methods
@@ -57,24 +63,39 @@ namespace cfms_web_api.Controller.v2
         /// <summary>
         /// Adds a new feedback.
         /// </summary>
+        /// <param name="apiKey">The API key for authorization.</param>
         /// <param name="feedback">The feedback to add.</param>
         /// <returns>The HTTP status code and the added feedback.</returns>
         /// <response code="201">Returns the added feedback.</response>
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(List<Feedback>))]
-        public ActionResult<List<Feedback>> AddFeedback(Feedback feedback)
+        public ActionResult<List<Feedback>> AddFeedback(string apiKey, Feedback feedback)
         {
+            // Check if the API key is valid
+            if (!ValidateApiKey(apiKey))
+            {
+                return Unauthorized("Invalid API key");
+            }
+
             var addedFeedback = _FeedbackService.AddFeedback(feedback);
 
             if (addedFeedback != null)
             {
                 // If the feedback was added successfully, send notification alert
                 string message = $"Feedback ID: {feedback.Id}\nSubject: {feedback.Subject}\nMessage: {feedback.Message}\nSubmitted Date: {feedback.SubmittedDate}";
-                _NotificationController.SendNotif("emandlenionline@gmail.com", "Feedback Received", message);
+                string storedNotifReceiver = _configuration["Mailgun:Receiver"];
+                _NotificationController.SendNotif(storedNotifReceiver, "Feedback Received", message);
             }
 
             return addedFeedback;
         }
+
+        private bool ValidateApiKey(string apiKey)
+        {
+            string storedApiKey = _configuration["AppSettings:ApiKey"];
+            return apiKey == storedApiKey;
+        }
+
         #endregion
 
         #region DELETE Methods
